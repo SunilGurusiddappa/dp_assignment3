@@ -1,0 +1,18 @@
+{
+    "contents" : "---\ntitle: \"assignment3\"\nauthor: \"Sunil Gurusiddappa\"\ndate: \"November 13, 2016\"\noutput: ioslides_presentation\n---\n\n```{r setup, include=FALSE}\nknitr::opts_chunk$set(echo = FALSE)\n```\n\n```{r echo=FALSE, warning=FALSE, message=FALSE }\nlibrary(ggplot2)\nlibrary(plotly)\nlibrary(gapminder)\n```\n# Gapminder Bubble Plot (2007)\n\n```{r echo=FALSE, warning=FALSE, message=FALSE}\n\ngDat <- gapminder\njDat <- droplevels(subset(gDat, continent != \"Oceania\"))\n\n#colorsURL <- \"http://www.stat.ubc.ca/~jenny/notOcto/STAT545A/examples/gapminder/data/gapminderCountryColors.txt\"\n# countryColors <- read.delim(file = colorsURL, as.is = 3) # protect color\n\ncountryColors <- read.delim(file=\"gapminderCountryColors.txt\", header=TRUE, as.is = 3)\n\njColors <- countryColors$color\nnames(jColors) <- countryColors$country\n\njYear <- 2007\n\njDat <- jDat[with(jDat, order(year, -1 * pop)), ]\ngap.bubble.plot <- ggplot(subset(jDat, year == jYear),\n       aes(x = gdpPercap, y = lifeExp )) + scale_x_log10() +\n  geom_point(aes(size = sqrt(pop/pi), text = paste(country, lifeExp, \"years\")), pch = 21) + \n  scale_size_continuous(range=c(1,40)) +\n  facet_wrap(~ continent) + \n  aes(fill = country) + scale_fill_manual(values = jColors) + theme(legend.position=\"none\") +\n  xlab(\"GDP Per Capita\\n\") + ylab(\"\\nLife Expectancy\")\n\n\nggplotly(gap.bubble.plot, tooltip=c(\"text\"))\n\n```\n\nSee following slide for references\n\n## References\n\nPlot and code inspired by\nhttp://www.stat.ubc.ca/~jenny/STAT545A/block17_colorsGgplot2Qualitative.html\nhttp://www.stat.ubc.ca/~jenny/notOcto/STAT545A/examples/gapminder/data/gapminderCountryColors.txt\nhttps://www.gapminder.org/\n\nLicense\nhttps://creativecommons.org/licenses/by-nc/3.0/\n\n",
+    "created" : 1479063121588.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3410078409",
+    "id" : "28ADE6EA",
+    "lastKnownWriteTime" : 1479063468,
+    "path" : "C:/Users/roopa/assignment3/assignment3.Rmd",
+    "project_path" : "assignment3.Rmd",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_markdown"
+}
